@@ -76,3 +76,6 @@ hs_err_pid*
 
 # No ending in tilde
 *~
+
+# No JetBrains Files
+.idea/

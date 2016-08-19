@@ -10,9 +10,14 @@
 #                                                        #
 ##########################################################
 import re as __re
-__version__ = "1.2.0"
-__author__ = "Benjamin P. Trachtenberg"
-__contact__ = "e_ben_75-python@yahoo.com"
+__author__ = 'Benjamin P. Trachtenberg'
+__copyright__ = "Copyright (c) 2016, Benjamin P. Trachtenberg"
+__credits__ = None
+__license__ = 'The MIT License (MIT)'
+__version__ = (1, 2, 0)
+__maintainer__ = 'Benjamin P. Trachtenberg'
+__email__ = 'e_ben_75-python@yahoo.com'
+__status__ = "Production"
 
 # Third party libraries
 """ Place third party libraries here """
