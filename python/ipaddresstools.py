@@ -14,8 +14,8 @@ __author__ = 'Benjamin P. Trachtenberg'
 __copyright__ = "Copyright (c) 2016, Benjamin P. Trachtenberg"
 __credits__ = None
 __license__ = 'The MIT License (MIT)'
-__version__ = '1.2.0'
-__version_info__ = tuple([ int(num) for num in __version__.split('.')])
+__version__ = '1.2.1'
+__version_info__ = tuple([int(num) for num in __version__.split('.')])
 __maintainer__ = 'Benjamin P. Trachtenberg'
 __email__ = 'e_ben_75-python@yahoo.com'
 __status__ = "Production"
@@ -124,6 +124,10 @@ all_subnets_longer_prefix(ip_net, cidr)
 all_subnets_shorter_prefix(ip_net, cidr, include_default=False)
 all_subnets_possible(ip_net, cidr) = AllSubnetsPossibleLongerPrefix(strIpNet,strCidr)
 
+Functions included in v1.2.1
+ip_mask(ip_addr_and_mask, return_tuple=True):
+ip(ip_addr, return_tuple=True):
+
 
 """
 
@@ -143,7 +147,7 @@ def ucast_ip_mask(ip_addr_and_mask, return_tuple=True):
         while not regex_ucast_ip_and_mask.match(ip_addr_and_mask):
             print("Not a good unicast IP and CIDR mask combo.")
             print("Please try again.")
-            ip_addr_and_mask = input("Please enter a IP address and mask in the follwing format x.x.x.x/x: ")
+            ip_addr_and_mask = input("Please enter a unicast IP address and mask in the follwing format x.x.x.x/x: ")
         ip_cidr_split = ip_addr_and_mask.split("/")
         ip_addr = ip_cidr_split[0]
         cidr = ip_cidr_split[1]
@@ -225,6 +229,57 @@ def mcast_ip(ip_addr, return_tuple=True):
         return ip_addr
     elif not return_tuple:
         if not regex_mcast_ip.match(ip_addr):
+            return False
+        else:
+            return True
+
+
+def ip_mask(ip_addr_and_mask, return_tuple=True):
+    """
+    Function to check if a address and CIDR mask is good
+    Args:
+        ip_addr_and_mask: IP address and mask in the following format 192.168.1.1/24
+        return_tuple: Set to True it returns a IP and mask in a tuple, set to False returns True or False
+
+    Returns: see return_tuple for return options
+
+    """
+    regex_ip_and_mask = __re.compile("^((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))/((3[0-2])|([1-2]?[0-9]))$")
+    if return_tuple:
+        while not regex_ip_and_mask.match(ip_addr_and_mask):
+            print("Not a good IP and CIDR mask combo.")
+            print("Please try again.")
+            ip_addr_and_mask = input("Please enter a IP address and mask in the follwing format x.x.x.x/x: ")
+        ip_cidr_split = ip_addr_and_mask.split("/")
+        ip_addr = ip_cidr_split[0]
+        cidr = ip_cidr_split[1]
+        return ip_addr, cidr
+    elif not return_tuple:
+        if not regex_ip_and_mask.match(ip_addr_and_mask):
+            return False
+        else:
+            return True
+
+
+def ip(ip_addr, return_tuple=True):
+    """
+    Function to check if a address is good
+    Args:
+        ip_addr: IP address in the following format 192.168.1.1
+        return_tuple: Set to True it returns a IP, set to False returns True or False
+
+    Returns: see return_tuple for return options
+
+    """
+    regex_ip = __re.compile("^((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))$")
+    if return_tuple:
+        while not regex_ip.match(ip_addr):
+            print("Not a good IP.")
+            print("Please try again.")
+            ip_addr = input("Please enter a IP address in the following format x.x.x.x: ")
+        return ip_addr
+    elif not return_tuple:
+        if not regex_ip.match(ip_addr):
             return False
         else:
             return True
