@@ -9,22 +9,20 @@
 # Collection of tools for IP Address's                   #
 #                                                        #
 ##########################################################
+import logging
 import re as __re
 __author__ = 'Benjamin P. Trachtenberg'
 __copyright__ = "Copyright (c) 2016, Benjamin P. Trachtenberg"
 __credits__ = None
 __license__ = 'The MIT License (MIT)'
-__version__ = '1.2.1'
+__version__ = '1.2.2'
 __version_info__ = tuple([int(num) for num in __version__.split('.')])
 __maintainer__ = 'Benjamin P. Trachtenberg'
 __email__ = 'e_ben_75-python@yahoo.com'
 __status__ = "Production"
 
-# Third party libraries
-""" Place third party libraries here """
-# My made libraries
-""" Place your made libraries here """
-# BEGIN DICTIONARIES
+LOGGER = logging.getLogger(__name__)
+
 """ Dictionaries included in v1.0.0
 
 __mask_conversion = Used to convert IP masks and such
@@ -99,9 +97,6 @@ __mask_conversion = {
     32: {"OCT1": 255, "OCT2": 255, "OCT3": 255, "OCT4": 255, "MASK": "255.255.255.255", "INVMASK": "0.0.0.0",
          "CIDR": "32"}}
 
-# END DICTIONARIES
-
-# BEGIN FUNCTIONS
 """ Functions included in v1.0.0
 
 ucast_ip_mask(ip_addr_and_mask, return_tuple=True)
@@ -313,6 +308,7 @@ def cidr_check(cidr, return_cidr=True):
         elif not return_cidr:
             return good_cidr
     except ValueError:
+        LOGGER.critical('Function cidr_check expected a number but got {item}'.format(item=cidr))
         raise ValueError("The input needs to be a number!!")
 
 
@@ -361,10 +357,12 @@ def get_neighbor_ip(ip_addr, cidr="30"):
             neighbor_ip_addr = "%s.%s.%s.%i" % (ip_addr_split[0], ip_addr_split[1], ip_addr_split[2], neighbor_octet)
         return our_ip_addr, neighbor_ip_addr
     except IndexError:
+        LOGGER.critical('Function get_neighbor_ip IndexError ip_addr {item} cidr {cidr}'.format(item=ip_addr,
+                                                                                                cidr=cidr))
         raise IndexError("You have entered invalid input, you must enter a ipv4 address")
 
 
-def whole_subnet_maker (ip_addr, cidr):
+def whole_subnet_maker(ip_addr, cidr):
     """
     Function to return a whole subnet value from a IP address and CIDR pair
     Args:
@@ -375,11 +373,13 @@ def whole_subnet_maker (ip_addr, cidr):
 
     """
     if ucast_ip(ip_addr, False) == False and mcast_ip(ip_addr, False) == False:
+        LOGGER.critical('Function whole_subnet_maker ip_addr {item}'.format(item=ip_addr))
         raise ValueError("Not a good ipv4 address")
     if not cidr_check(cidr, False):
+        LOGGER.critical('Function whole_subnet_maker cidr {item}'.format(item=cidr))
         raise ValueError("Not a good CIDR value should be 0 to 32")
 
-    def subnet_corrector( octet, cidr ):
+    def subnet_corrector(octet, cidr):
         """ Function to correct a octet for a subnet """
         cidr_int = int(cidr)
         octet_int = int(octet)
@@ -509,7 +509,8 @@ def all_subnets_longer_prefix(ip_net, cidr):
     while int(cidr) <= 32:
         try:
             subnets_list.append('%s/%s' % (whole_subnet_maker(ip_net, cidr), cidr))
-        except:
+        except Exception as e:
+            LOGGER.critical('Function all_subnets_longer_prefix {item}'.format(item=e))
             pass
         cidr = str(int(cidr) + 1)
     return subnets_list
@@ -531,15 +532,15 @@ def all_subnets_shorter_prefix(ip_net, cidr, include_default=False):
         while int(cidr) >= 0:
             try:
                 subnets_list.append('%s/%s' % (whole_subnet_maker(ip_net, cidr), cidr))
-            except:
-                pass
+            except Exception as e:
+                LOGGER.critical('Function all_subnets_shorter_prefix {item}'.format(item=e))
             cidr = str(int(cidr) - 1)
     else:
         while int(cidr) > 0:
             try:
                 subnets_list.append('%s/%s' % (whole_subnet_maker(ip_net, cidr), cidr))
-            except:
-                pass
+            except Exception as e:
+                LOGGER.critical('Function all_subnets_shorter_prefix {item}'.format(item=e))
             cidr = str(int(cidr) - 1)
     return subnets_list
 
@@ -557,7 +558,8 @@ def number_check(check, return_number=True):
     try:
         int(check)
         good = True
-    except:
+    except ValueError:
+        LOGGER.critical('Function number_check ValueError {item}'.format(item=check))
         good = False
     if return_number:
         while not good:
@@ -567,7 +569,8 @@ def number_check(check, return_number=True):
             try:
                 int(check)
                 good = True
-            except:
+            except ValueError:
+                LOGGER.critical('Function number_check ValueError {item}'.format(item=check))
                 good = False
         return check
     else:
