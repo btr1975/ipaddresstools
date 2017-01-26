@@ -15,7 +15,7 @@ __author__ = 'Benjamin P. Trachtenberg'
 __copyright__ = "Copyright (c) 2016, Benjamin P. Trachtenberg"
 __credits__ = None
 __license__ = 'The MIT License (MIT)'
-__version__ = '1.2.2'
+__version__ = '1.2.3'
 __version_info__ = tuple([int(num) for num in __version__.split('.')])
 __maintainer__ = 'Benjamin P. Trachtenberg'
 __email__ = 'e_ben_75-python@yahoo.com'
@@ -97,6 +97,8 @@ __mask_conversion = {
     32: {"OCT1": 255, "OCT2": 255, "OCT3": 255, "OCT4": 255, "MASK": "255.255.255.255", "INVMASK": "0.0.0.0",
          "CIDR": "32"}}
 
+mask_conversion = __mask_conversion
+
 """ Functions included in v1.0.0
 
 ucast_ip_mask(ip_addr_and_mask, return_tuple=True)
@@ -123,6 +125,8 @@ Functions included in v1.2.1
 ip_mask(ip_addr_and_mask, return_tuple=True):
 ip(ip_addr, return_tuple=True):
 
+Added to v1.2.3
+mask_conversion = __mask_conversion
 
 """
 
