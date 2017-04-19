@@ -11,11 +11,13 @@
 ##########################################################
 import logging
 import re as __re
+import sys as __sys
+import ipaddress as __ipaddress
 __author__ = 'Benjamin P. Trachtenberg'
 __copyright__ = "Copyright (c) 2016, Benjamin P. Trachtenberg"
 __credits__ = None
 __license__ = 'The MIT License (MIT)'
-__version__ = '1.2.3'
+__version__ = '1.2.4'
 __version_info__ = tuple([int(num) for num in __version__.split('.')])
 __maintainer__ = 'Benjamin P. Trachtenberg'
 __email__ = 'e_ben_75-python@yahoo.com'
@@ -127,6 +129,9 @@ ip(ip_addr, return_tuple=True):
 
 Added to v1.2.3
 mask_conversion = __mask_conversion
+
+Added to v1.2.4
+all_ip_address_in_subnet(ip_net, cidr)
 
 """
 
@@ -549,6 +554,31 @@ def all_subnets_shorter_prefix(ip_net, cidr, include_default=False):
     return subnets_list
 
 
+def all_ip_address_in_subnet(ip_net, cidr):
+    """
+    Function to return every ip in a subnet
+    :param ip_net: Unicast or Multicast IP address or subnet in the following format 192.168.1.1, 239.1.1.1
+    :param cidr: CIDR value of 0 to 32
+    :return: 
+        A list of ip address's
+    
+    """
+    ip_address_list = list()
+    if not ip_mask('{ip_net}/{cidr}'.format(ip_net=ip_net, cidr=cidr), return_tuple=False):
+        LOGGER.critical('{network} is not a valid IPv4 network'.format(network='{ip_net}/{cidr}'.format(ip_net=ip_net,
+                                                                                                        cidr=cidr)))
+        raise ValueError('{network} is not a valid IPv4 network'.format(network='{ip_net}/{cidr}'.format(ip_net=ip_net,
+                                                                                                         cidr=cidr)))
+
+    else:
+        ip_net = whole_subnet_maker(ip_net, cidr)
+        net = __ipaddress.ip_network('{ip_net}/{cidr}'.format(ip_net=ip_net, cidr=cidr))
+        for single_ip in net:
+            ip_address_list.append(str(single_ip))
+
+        return ip_address_list
+
+
 def number_check(check, return_number=True):
     """
     Function to verify item entered is a number
@@ -585,3 +615,8 @@ def number_check(check, return_number=True):
 if __name__ == "__main__":
     print("This module was not made to be used as stand alone!!")
     help(__name__)
+
+else:
+    if __sys.version_info < (3, 5, 2):
+        LOGGER.critical('{mod_name} needs Python version 3.5.2 or above!'.format(mod_name=__name__))
+        raise SyntaxError('{mod_name} needs Python version 3.5.2 or above!'.format(mod_name=__name__))

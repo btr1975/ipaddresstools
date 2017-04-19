@@ -1,5 +1,5 @@
 import unittest
-from modIpAddressTools import ucast_ip, ucast_ip_mask, mcast_ip, mcast_ip_mask, cidr_check, get_neighbor_ip, \
+from ipaddresstools import ucast_ip, ucast_ip_mask, mcast_ip, mcast_ip_mask, cidr_check, get_neighbor_ip, \
     whole_subnet_maker, number_check
 
 
@@ -54,7 +54,6 @@ class TestMisc(unittest.TestCase):
         """ Testing for a good number """
         self.assertTrue(number_check('5', return_number=False))
         self.assertFalse(number_check('a', return_number=False))
-
 
 
 if __name__ == '__main__':
