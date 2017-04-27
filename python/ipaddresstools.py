@@ -13,11 +13,12 @@ import logging
 import re as __re
 import sys as __sys
 import ipaddress as __ipaddress
+import random as __random
 __author__ = 'Benjamin P. Trachtenberg'
 __copyright__ = "Copyright (c) 2016, Benjamin P. Trachtenberg"
 __credits__ = None
 __license__ = 'The MIT License (MIT)'
-__version__ = '1.2.4'
+__version__ = '1.2.5'
 __version_info__ = tuple([int(num) for num in __version__.split('.')])
 __maintainer__ = 'Benjamin P. Trachtenberg'
 __email__ = 'e_ben_75-python@yahoo.com'
@@ -25,7 +26,8 @@ __status__ = "Production"
 
 LOGGER = logging.getLogger(__name__)
 
-""" Dictionaries included in v1.0.0
+""" 
+Dictionaries included in v1.0.0
 
 __mask_conversion = Used to convert IP masks and such
 
@@ -101,8 +103,8 @@ __mask_conversion = {
 
 mask_conversion = __mask_conversion
 
-""" Functions included in v1.0.0
-
+""" 
+Functions included in v1.0.0
 ucast_ip_mask(ip_addr_and_mask, return_tuple=True)
 ucast_ip(ip_addr, return_tuple=True)
 mcast_ip_mask(ip_addr_and_mask, return_tuple=True)
@@ -132,6 +134,13 @@ mask_conversion = __mask_conversion
 
 Added to v1.2.4
 all_ip_address_in_subnet(ip_net, cidr)
+
+Added to v1.2.5
+random_cidr_mask(lowest_mask=16)
+random_ucast_ip()
+random_mcast_ip()
+random_ucast_ip_mask(lowest_mask=16)
+random_mcast_ip_mask(lowest_mask=16)
 
 """
 
@@ -610,7 +619,86 @@ def number_check(check, return_number=True):
     else:
         return good
 
-# END FUNCTIONS
+
+def random_cidr_mask(lowest_mask=16):
+    """
+    Function to generate a random CIDR value
+    :param 
+        lowest_mask: An integer value for the lowest mask you want it to generate
+    
+    :return: 
+        A string of a random CIDR mask
+        
+    """
+    if lowest_mask < 33:
+        return str(__random.randrange(lowest_mask, 33))
+
+    else:
+        LOGGER.critical('{lowest_mask} must be 32 or less.'.format(lowest_mask=lowest_mask))
+        raise ValueError('{lowest_mask} must be 32 or less.'.format(lowest_mask=lowest_mask))
+
+
+def random_ucast_ip():
+    """
+    Function to generate a random unicast ip address
+    :return: 
+        A unicast IP Address
+    
+    """
+    first_octet = str(__random.randrange(1, 224))
+
+    def get_other_octetes():
+        return str(__random.randrange(0, 255))
+
+    return '{first_octet}.{second_octet}.{third_octet}.{fourth_octet}'.format(first_octet=first_octet,
+                                                                              second_octet=get_other_octetes(),
+                                                                              third_octet=get_other_octetes(),
+                                                                              fourth_octet=get_other_octetes())
+
+
+def random_mcast_ip():
+    """
+    Function to generate a random multicast ip address
+    :return: 
+        A multicast IP Address
+
+    """
+    first_octet = str(__random.randrange(224, 240))
+
+    def get_other_octetes():
+        return str(__random.randrange(0, 255))
+
+    return '{first_octet}.{second_octet}.{third_octet}.{fourth_octet}'.format(first_octet=first_octet,
+                                                                              second_octet=get_other_octetes(),
+                                                                              third_octet=get_other_octetes(),
+                                                                              fourth_octet=get_other_octetes())
+
+
+def random_ucast_ip_mask(lowest_mask=16):
+    """
+    Function to generate a random unicast ip address and cidr mask pair in the following format X.X.X.X/X
+    :param 
+        lowest_mask: An integer value for the lowest mask you want it to generate
+        
+    :return: 
+        A unicast IP Address and CIDR pair in the following format X.X.X.X/X
+        
+    """
+    return '{ip_addr}/{cidr}'.format(ip_addr=random_ucast_ip(), cidr=random_cidr_mask(lowest_mask))
+
+
+def random_mcast_ip_mask(lowest_mask=16):
+    """
+    Function to generate a random multicast ip address and cidr mask pair in the following format X.X.X.X/X
+    :param 
+        lowest_mask: An integer value for the lowest mask you want it to generate
+
+    :return: 
+        A multicast IP Address and CIDR pair in the following format X.X.X.X/X
+
+    """
+    return '{ip_addr}/{cidr}'.format(ip_addr=random_mcast_ip(), cidr=random_cidr_mask(lowest_mask))
+
 
 if __name__ == "__main__":
     print("This module was not made to be used as stand alone!!")
