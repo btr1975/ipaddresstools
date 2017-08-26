@@ -1,14 +1,17 @@
-# ipaddresstools
+# Python Script: ipaddresstools
+# Groovy Script: ipaddresstools
 
 ## Written By: Benjamin P. Trachtenberg 
 
 ### Contact Information:  e_ben_75-python@yahoo.com
+### If you have any questions e-mail me
 
 ### LinkedIn: [Ben Trachtenberg](https://www.linkedin.com/in/ben-trachtenberg-3a78496)
+### Docker Hub: [Docker Hub](https://hub.docker.com/r/btr1975)
 
 ### Requirements
 
-* Nothing Specific
+* Nothing Specific, I would suggest Python 3.5.2 and above.
 
 ### Languages
 
@@ -17,21 +20,43 @@
 
 ### About
 
-This is a library used to verify, and correct ipv4 address's, and subnets.
-The Python, and groovy versions may noy be exactly the same
+This is a library used to verify, and correct ipv4 address's, and subnets.  I wrote it before a good library was out there for network engineers.
+The Python, and groovy versions may not be exactly the same since my focus was on the Python version.
 
-### Features
+### Functions included in v1.0.0
+* ucast_ip_mask(ip_addr_and_mask, return_tuple=True)
+* ucast_ip(ip_addr, return_tuple=True)
+* mcast_ip_mask(ip_addr_and_mask, return_tuple=True)
+* mcast_ip(ip_addr, return_tuple=True)
+* cidr_check(cidr, return_cidr=True)
+* get_neighbor_ip(ip_addr, cidr="30")
+* whole_subnet_maker (ip_addr, cidr)
 
-1. Unicast ip, and mask
-2. Unicast ip
-3. Multicast ip, and mask
-4. Multicast ip
-5. ip, and mask
-6. ip
-7. Correct neighbor ip
-8. Create a subnet form a ip, and mask combo
-9. Verify CIDR
-10. Get subnet range
-11. Get all subnets possible
-12. Get all longer subnets possible
-13. Get all shorter subnets possible
+### Functions Added in v1.1.0
+* number_check(check, return_number=True)
+
+### Functions Added in v1.1.1
+* subnet_range(ip_net, cidr)
+* all_subnets_possible(ip_net, cidr)
+
+### Functions Added in v1.1.2
+* all_subnets_longer_prefix(ip_net, cidr)
+* all_subnets_shorter_prefix(ip_net, cidr, include_default=False)
+* all_subnets_possible(ip_net, cidr) = AllSubnetsPossibleLongerPrefix(strIpNet,strCidr)
+
+### Functions Added in v1.2.1
+* ip_mask(ip_addr_and_mask, return_tuple=True):
+* ip(ip_addr, return_tuple=True):
+
+### Functions Added to v1.2.3
+* mask_conversion = __mask_conversion
+
+### Functions Added to v1.2.4
+* all_ip_address_in_subnet(ip_net, cidr)
+
+### Functions Added to v1.2.5
+* random_cidr_mask(lowest_mask=16)
+* random_ucast_ip()
+* random_mcast_ip()
+* random_ucast_ip_mask(lowest_mask=16)
+* random_mcast_ip_mask(lowest_mask=16)
