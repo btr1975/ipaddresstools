@@ -13,6 +13,11 @@
 
 * Nothing Specific, I would suggest Python 3.5.2 and above.
 
+### Installation
+
+* From source "setup.py install"
+* From pip "pip install ipaddresstools"
+
 ### Languages
 
 * Python
