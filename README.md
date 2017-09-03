@@ -1,5 +1,4 @@
 # Python Script: ipaddresstools
-# Groovy Script: ipaddresstools
 
 ## Written By: Benjamin P. Trachtenberg 
 
@@ -16,12 +15,10 @@
 ### Languages
 
 * Python
-* Groovy
 
 ### About
 
 This is a library used to verify, and correct ipv4 address's, and subnets.  I wrote it before a good library was out there for network engineers.
-The Python, and groovy versions may not be exactly the same since my focus was on the Python version.
 
 ### Functions included in v1.0.0
 * ucast_ip_mask(ip_addr_and_mask, return_tuple=True)

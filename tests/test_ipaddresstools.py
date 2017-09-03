@@ -1,8 +1,6 @@
-from ipaddresstools import ucast_ip, ucast_ip_mask, mcast_ip, mcast_ip_mask, cidr_check, get_neighbor_ip, \
-    whole_subnet_maker, number_check, ip, subnet_range, all_subnets_possible, all_subnets_longer_prefix, \
-    all_subnets_shorter_prefix, all_ip_address_in_subnet
-
-# Testing with pytest
+from ipaddresstools.ipaddresstools import ucast_ip, ucast_ip_mask, mcast_ip, mcast_ip_mask, cidr_check, \
+    get_neighbor_ip, whole_subnet_maker, number_check, ip, subnet_range, all_subnets_possible, \
+    all_subnets_longer_prefix, all_subnets_shorter_prefix, all_ip_address_in_subnet
 
 
 def test_ucast_ip_good():
