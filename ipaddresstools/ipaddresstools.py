@@ -11,7 +11,6 @@
 ##########################################################
 import logging
 import re as __re
-import sys as __sys
 import ipaddress as __ipaddress
 import random as __random
 __author__ = 'Benjamin P. Trachtenberg'
@@ -19,7 +18,7 @@ __copyright__ = "Copyright (c) 2016, Benjamin P. Trachtenberg"
 __credits__ = None
 __license__ = 'The MIT License (MIT)'
 __status__ = 'prod'
-__version_info__ = (1, 2, 7)
+__version_info__ = (1, 2, 8)
 __version__ = '.'.join(map(str, __version_info__))
 __maintainer__ = 'Benjamin P. Trachtenberg'
 __email__ = 'e_ben_75-python@yahoo.com'
@@ -698,13 +697,3 @@ def random_mcast_ip_mask(lowest_mask=16):
 
     """
     return '{ip_addr}/{cidr}'.format(ip_addr=random_mcast_ip(), cidr=random_cidr_mask(lowest_mask))
-
-
-if __name__ == "__main__":
-    print("This module was not made to be used as stand alone!!")
-    help(__name__)
-
-else:
-    if __sys.version_info < (3, 5, 2):
-        LOGGER.critical('{mod_name} needs Python version 3.5.2 or above!'.format(mod_name=__name__))
-        raise SyntaxError('{mod_name} needs Python version 3.5.2 or above!'.format(mod_name=__name__))
