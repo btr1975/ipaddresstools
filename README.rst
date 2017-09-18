@@ -19,7 +19,7 @@ Docker Hub: `Docker Hub <https://hub.docker.com/r/btr1975>`__
 Requirements
 ~~~~~~~~~~~~
 
--  Nothing Specific, I would suggest Python 3.5.2 and above.
+-  Nothing Specific, I would suggest Python 3.3 and above.
 
 Languages
 ~~~~~~~~~

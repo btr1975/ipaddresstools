@@ -12,7 +12,7 @@ tests_require = [
 setup(
     name='ipaddresstools',
     version=__version__,
-    python_requires='~=3.5',
+    python_requires='~=3.3',
     description='This is a library used to manipulate and verify ipv4 address\'s. ucast and mcast',
     keywords='ipv4 ip multicast unicast network engineer',
     url='https://github.com/btr1975/ipaddresstools',

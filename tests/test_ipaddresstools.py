@@ -1,46 +1,47 @@
 from ipaddresstools.ipaddresstools import ucast_ip, ucast_ip_mask, mcast_ip, mcast_ip_mask, cidr_check, \
-    get_neighbor_ip, whole_subnet_maker, number_check, ip, subnet_range, all_subnets_possible, \
-    all_subnets_longer_prefix, all_subnets_shorter_prefix, all_ip_address_in_subnet
+                                          get_neighbor_ip, whole_subnet_maker, number_check, ip, subnet_range, \
+                                          all_subnets_possible, all_subnets_longer_prefix, all_subnets_shorter_prefix, \
+                                          all_ip_address_in_subnet
 
 
 def test_ucast_ip_good():
-    assert ucast_ip('192.168.1.1', return_tuple=False) == True
+    assert ucast_ip('192.168.1.1', return_tuple=False) is True
 
 
 def test_ucast_ip_bad():
-    assert ucast_ip('224.1.1.1', return_tuple=False) == False
+    assert ucast_ip('224.1.1.1', return_tuple=False) is False
 
 
 def test_ucast_ip_mask_good():
-    assert ucast_ip_mask('192.168.1.1/24', return_tuple=False) == True
+    assert ucast_ip_mask('192.168.1.1/24', return_tuple=False) is True
 
 
 def test_ucast_ip_mask_bad():
-    assert ucast_ip_mask('224.1.1.1/24', return_tuple=False) == False
+    assert ucast_ip_mask('224.1.1.1/24', return_tuple=False) is False
 
 
 def test_mcast_ip_good():
-    assert mcast_ip('224.1.1.1', return_tuple=False) == True
+    assert mcast_ip('224.1.1.1', return_tuple=False) is True
 
 
 def test_mcast_ip_bad():
-    assert mcast_ip('192.168.1.1', return_tuple=False) == False
+    assert mcast_ip('192.168.1.1', return_tuple=False) is False
 
 
 def test_mcast_ip_mask_good():
-    assert mcast_ip_mask('224.1.1.1/24', return_tuple=False) == True
+    assert mcast_ip_mask('224.1.1.1/24', return_tuple=False) is True
 
 
 def test_mcast_ip_mask_bad():
-    assert mcast_ip_mask('192.168.1.1/24', return_tuple=False) == False
+    assert mcast_ip_mask('192.168.1.1/24', return_tuple=False) is False
 
 
 def test_cidr_value_good():
-    assert cidr_check('24', return_cidr=False)== True
+    assert cidr_check('24', return_cidr=False) is True
 
 
 def test_cidr_value_bad():
-    assert cidr_check('50', return_cidr=False) == False
+    assert cidr_check('50', return_cidr=False) is False
 
 
 def test_get_neighbor_ip_30():
@@ -58,20 +59,20 @@ def test_whole_subnet_maker_good():
 
 
 def test_number_check_good():
-    assert number_check('5', return_number=False) == True
+    assert number_check('5', return_number=False) is True
 
 
 def test_number_check_bad():
-    assert number_check('a', return_number=False) == False
+    assert number_check('a', return_number=False) is False
 
 
 def test_ip_good():
-    assert ip('192.168.1.1', return_tuple=False) == True
-    assert ip('224.1.1.1', return_tuple=False) == True
+    assert ip('192.168.1.1', return_tuple=False) is True
+    assert ip('224.1.1.1', return_tuple=False) is True
 
 
 def test_ip_bad():
-    assert ip('192.168.1.1000', return_tuple=False) == False
+    assert ip('192.168.1.1000', return_tuple=False) is False
 
 
 def test_subnet_range():
