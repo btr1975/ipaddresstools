@@ -14,11 +14,11 @@ import re as __re
 import ipaddress as __ipaddress
 import random as __random
 __author__ = 'Benjamin P. Trachtenberg'
-__copyright__ = "Copyright (c) 2016, Benjamin P. Trachtenberg"
+__copyright__ = "Copyright (c) 2020, Benjamin P. Trachtenberg"
 __credits__ = None
 __license__ = 'The MIT License (MIT)'
 __status__ = 'prod'
-__version_info__ = (1, 2, 8)
+__version_info__ = (1, 2, 9)
 __version__ = '.'.join(map(str, __version_info__))
 __maintainer__ = 'Benjamin P. Trachtenberg'
 __email__ = 'e_ben_75-python@yahoo.com'
@@ -154,7 +154,7 @@ def ucast_ip_mask(ip_addr_and_mask, return_tuple=True):
     Returns: see return_tuple for return options
 
     """
-    regex_ucast_ip_and_mask = __re.compile("^((22[0-3])|(2[0-1][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))/((3[0-2])|([1-2]?[0-9]))$")
+    regex_ucast_ip_and_mask = __re.compile(r"^((22[0-3])|(2[0-1][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))/((3[0-2])|([1-2]?[0-9]))$")
     if return_tuple:
         while not regex_ucast_ip_and_mask.match(ip_addr_and_mask):
             print("Not a good unicast IP and CIDR mask combo.")
@@ -181,7 +181,7 @@ def ucast_ip(ip_addr, return_tuple=True):
     Returns: see return_tuple for return options
 
     """
-    regex_ucast_ip = __re.compile("^((22[0-3])|(2[0-1][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))$")
+    regex_ucast_ip = __re.compile(r"^((22[0-3])|(2[0-1][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))$")
     if return_tuple:
         while not regex_ucast_ip.match(ip_addr):
             print("Not a good unicast IP.")
@@ -205,7 +205,7 @@ def mcast_ip_mask(ip_addr_and_mask, return_tuple=True):
     Returns: see return_tuple for return options
 
     """
-    regex_mcast_ip_and_mask = __re.compile("^(((2[2-3][4-9])|(23[0-3]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))/((3[0-2])|([1-2][0-9])|[3-9]))$")
+    regex_mcast_ip_and_mask = __re.compile(r"^(((2[2-3][4-9])|(23[0-3]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))/((3[0-2])|([1-2][0-9])|[3-9]))$")
     if return_tuple:
         while not regex_mcast_ip_and_mask.match(ip_addr_and_mask):
             print("Not a good multicast IP and CIDR mask combo.")
@@ -232,7 +232,7 @@ def mcast_ip(ip_addr, return_tuple=True):
     Returns: see return_tuple for return options
 
     """
-    regex_mcast_ip = __re.compile("^(((2[2-3][4-9])|(23[0-3]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9])))$")
+    regex_mcast_ip = __re.compile(r"^(((2[2-3][4-9])|(23[0-3]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9])))$")
     if return_tuple:
         while not regex_mcast_ip.match(ip_addr):
             print("Not a good multicast IP.")
@@ -256,7 +256,7 @@ def ip_mask(ip_addr_and_mask, return_tuple=True):
     Returns: see return_tuple for return options
 
     """
-    regex_ip_and_mask = __re.compile("^((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))/((3[0-2])|([1-2]?[0-9]))$")
+    regex_ip_and_mask = __re.compile(r"^((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))/((3[0-2])|([1-2]?[0-9]))$")
     if return_tuple:
         while not regex_ip_and_mask.match(ip_addr_and_mask):
             print("Not a good IP and CIDR mask combo.")
@@ -283,7 +283,7 @@ def ip(ip_addr, return_tuple=True):
     Returns: see return_tuple for return options
 
     """
-    regex_ip = __re.compile("^((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))$")
+    regex_ip = __re.compile(r"^((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))$")
     if return_tuple:
         while not regex_ip.match(ip_addr):
             print("Not a good IP.")
@@ -619,7 +619,7 @@ def number_check(check, return_number=True):
         return good
 
 
-def random_cidr_mask(lowest_mask=16):
+def random_cidr_mask(lowest_mask=16): # pragma: no cover
     """
     Function to generate a random CIDR value
     :param 
@@ -637,7 +637,7 @@ def random_cidr_mask(lowest_mask=16):
         raise ValueError('{lowest_mask} must be 32 or less.'.format(lowest_mask=lowest_mask))
 
 
-def random_ucast_ip():
+def random_ucast_ip(): # pragma: no cover
     """
     Function to generate a random unicast ip address
     :return: 
@@ -655,7 +655,7 @@ def random_ucast_ip():
                                                                               fourth_octet=get_other_octetes())
 
 
-def random_mcast_ip():
+def random_mcast_ip(): # pragma: no cover
     """
     Function to generate a random multicast ip address
     :return: 
@@ -673,7 +673,7 @@ def random_mcast_ip():
                                                                               fourth_octet=get_other_octetes())
 
 
-def random_ucast_ip_mask(lowest_mask=16):
+def random_ucast_ip_mask(lowest_mask=16): # pragma: no cover
     """
     Function to generate a random unicast ip address and cidr mask pair in the following format X.X.X.X/X
     :param 
@@ -686,7 +686,7 @@ def random_ucast_ip_mask(lowest_mask=16):
     return '{ip_addr}/{cidr}'.format(ip_addr=random_ucast_ip(), cidr=random_cidr_mask(lowest_mask))
 
 
-def random_mcast_ip_mask(lowest_mask=16):
+def random_mcast_ip_mask(lowest_mask=16): # pragma: no cover
     """
     Function to generate a random multicast ip address and cidr mask pair in the following format X.X.X.X/X
     :param 
