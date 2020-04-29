@@ -15,7 +15,7 @@ setup(
     python_requires='~=3.3',
     description='This is a library used to manipulate and verify ipv4 address\'s. ucast and mcast',
     keywords='ipv4 ip multicast unicast network engineer',
-    url='https://github.com/btr1975/ipaddresstools',
+    url='https://ipaddresstools.readthedocs.io',
     author='Benjamin P. Trachtenberg',
     author_email='e_ben_75-python@yahoo.com',
     license='MIT',
