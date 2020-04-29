@@ -1,7 +1,7 @@
 Python Script: ipaddresstools
 =============================
 
-Current version: 2020.4.28.2
+Current version: 2020.4.29.1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `Documentaion <https://ipaddresstools.readthedocs.io/>`__
