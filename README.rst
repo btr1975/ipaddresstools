@@ -1,7 +1,7 @@
 Python Script: ipaddresstools
 =============================
 
-Current version: 2020.4.28.1
+Current version: 2020.4.28.2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Written By: Benjamin P. Trachtenberg
