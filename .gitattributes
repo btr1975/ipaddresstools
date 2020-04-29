@@ -8,4 +8,4 @@
 *.gif binary
 *.pdf binary
 *.jar binary
-
+*.tar.gz binary

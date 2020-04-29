@@ -18,7 +18,7 @@ __copyright__ = "Copyright (c) 2020, Benjamin P. Trachtenberg"
 __credits__ = None
 __license__ = 'The MIT License (MIT)'
 __status__ = 'prod'
-__version_info__ = (1, 2, 9)
+__version_info__ = (2020, 4, 28, 1)
 __version__ = '.'.join(map(str, __version_info__))
 __maintainer__ = 'Benjamin P. Trachtenberg'
 __email__ = 'e_ben_75-python@yahoo.com'
@@ -102,59 +102,24 @@ __mask_conversion = {
 
 mask_conversion = __mask_conversion
 
-""" 
-Functions included in v1.0.0
-ucast_ip_mask(ip_addr_and_mask, return_tuple=True)
-ucast_ip(ip_addr, return_tuple=True)
-mcast_ip_mask(ip_addr_and_mask, return_tuple=True)
-mcast_ip(ip_addr, return_tuple=True)
-cidr_check(cidr, return_cidr=True)
-get_neighbor_ip(ip_addr, cidr="30")
-whole_subnet_maker (ip_addr, cidr)
-
-Functions included in v1.1.0
-number_check(check, return_number=True)
-
-Functions included in v1.1.1
-subnet_range(ip_net, cidr)
-all_subnets_possible(ip_net, cidr)
-
-Functions included in v1.1.2
-all_subnets_longer_prefix(ip_net, cidr)
-all_subnets_shorter_prefix(ip_net, cidr, include_default=False)
-all_subnets_possible(ip_net, cidr) = AllSubnetsPossibleLongerPrefix(strIpNet,strCidr)
-
-Functions included in v1.2.1
-ip_mask(ip_addr_and_mask, return_tuple=True):
-ip(ip_addr, return_tuple=True):
-
-Added to v1.2.3
-mask_conversion = __mask_conversion
-
-Added to v1.2.4
-all_ip_address_in_subnet(ip_net, cidr)
-
-Added to v1.2.5
-random_cidr_mask(lowest_mask=16)
-random_ucast_ip()
-random_mcast_ip()
-random_ucast_ip_mask(lowest_mask=16)
-random_mcast_ip_mask(lowest_mask=16)
-
-"""
-
 
 def ucast_ip_mask(ip_addr_and_mask, return_tuple=True):
     """
     Function to check if a address is unicast and that the CIDR mask is good
-    Args:
-        ip_addr_and_mask: Unicast IP address and mask in the following format 192.168.1.1/24
-        return_tuple: Set to True it returns a IP and mask in a tuple, set to False returns True or False
 
-    Returns: see return_tuple for return options
+    :type ip_addr_and_mask: String
+    :param ip_addr_and_mask: String format 192.168.1.1/24
+    :type return_tuple: Boolean
+    :param return_tuple: True or False
+
+    :rtype: Tuple, or Boolean
+    :returns: Tuple, or Boolean
 
     """
-    regex_ucast_ip_and_mask = __re.compile(r"^((22[0-3])|(2[0-1][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))/((3[0-2])|([1-2]?[0-9]))$")
+    regex_ucast_ip_and_mask = __re.compile(r'^((22[0-3])|(2[0-1][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|'
+                                           r'(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|'
+                                           r'(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|'
+                                           r'([1-9]?[0-9]))/((3[0-2])|([1-2]?[0-9]))$')
     if return_tuple:
         while not regex_ucast_ip_and_mask.match(ip_addr_and_mask):
             print("Not a good unicast IP and CIDR mask combo.")
@@ -174,14 +139,20 @@ def ucast_ip_mask(ip_addr_and_mask, return_tuple=True):
 def ucast_ip(ip_addr, return_tuple=True):
     """
     Function to check if a address is unicast
-    Args:
-        ip_addr: Unicast IP address in the following format 192.168.1.1
-        return_tuple: Set to True it returns a IP, set to False returns True or False
 
-    Returns: see return_tuple for return options
+    :type ip_addr: String
+    :param ip_addr: String format 192.168.1.1
+    :type return_tuple: Boolean
+    :param return_tuple: True or False
+
+    :rtype: Tuple, or Boolean
+    :returns: Tuple, or Boolean
 
     """
-    regex_ucast_ip = __re.compile(r"^((22[0-3])|(2[0-1][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))$")
+    regex_ucast_ip = __re.compile(r'^((22[0-3])|(2[0-1][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|'
+                                  r'(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|'
+                                  r'(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|'
+                                  r'([1-9]?[0-9]))$')
     if return_tuple:
         while not regex_ucast_ip.match(ip_addr):
             print("Not a good unicast IP.")
@@ -198,14 +169,20 @@ def ucast_ip(ip_addr, return_tuple=True):
 def mcast_ip_mask(ip_addr_and_mask, return_tuple=True):
     """
     Function to check if a address is multicast and that the CIDR mask is good
-    Args:
-        ip_addr_and_mask: Multicast IP address and mask in the following format 239.1.1.1/24
-        return_tuple: Set to True it returns a IP and mask in a tuple, set to False returns True or False
 
-    Returns: see return_tuple for return options
+    :type ip_addr_and_mask: String
+    :param ip_addr_and_mask: String format 239.0.0.0/24
+    :type return_tuple: Boolean
+    :param return_tuple: True or False
+
+    :rtype: Tuple, or Boolean
+    :returns: Tuple, or Boolean
 
     """
-    regex_mcast_ip_and_mask = __re.compile(r"^(((2[2-3][4-9])|(23[0-3]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))/((3[0-2])|([1-2][0-9])|[3-9]))$")
+    regex_mcast_ip_and_mask = __re.compile(r'^(((2[2-3][4-9])|(23[0-3]))\.((25[0-5])|(2[0-4][0-9])|'
+                                           r'(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|'
+                                           r'([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|'
+                                           r'([1-9]?[0-9]))/((3[0-2])|([1-2][0-9])|[3-9]))$')
     if return_tuple:
         while not regex_mcast_ip_and_mask.match(ip_addr_and_mask):
             print("Not a good multicast IP and CIDR mask combo.")
@@ -220,19 +197,24 @@ def mcast_ip_mask(ip_addr_and_mask, return_tuple=True):
             return False
         else:
             return True
-    
+
 
 def mcast_ip(ip_addr, return_tuple=True):
     """
     Function to check if a address is multicast
-    Args:
-        ip_addr: Multicast IP address in the following format 239.1.1.1
-        return_tuple: Set to True it returns a IP, set to False returns True or False
 
-    Returns: see return_tuple for return options
+    :type ip_addr: String
+    :param ip_addr: String format 239.1.1.1
+    :type return_tuple: Boolean
+    :param return_tuple: True or False
+
+    :rtype: Tuple, or Boolean
+    :returns: Tuple, or Boolean
 
     """
-    regex_mcast_ip = __re.compile(r"^(((2[2-3][4-9])|(23[0-3]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9])))$")
+    regex_mcast_ip = __re.compile(r'^(((2[2-3][4-9])|(23[0-3]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]'
+                                  r'))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4]'
+                                  r'[0-9])|(1[0-9][0-9])|([1-9]?[0-9])))$')
     if return_tuple:
         while not regex_mcast_ip.match(ip_addr):
             print("Not a good multicast IP.")
@@ -249,14 +231,20 @@ def mcast_ip(ip_addr, return_tuple=True):
 def ip_mask(ip_addr_and_mask, return_tuple=True):
     """
     Function to check if a address and CIDR mask is good
-    Args:
-        ip_addr_and_mask: IP address and mask in the following format 192.168.1.1/24
-        return_tuple: Set to True it returns a IP and mask in a tuple, set to False returns True or False
 
-    Returns: see return_tuple for return options
+    :type ip_addr_and_mask: String
+    :param ip_addr_and_mask: String format 192.168.1.1/24
+    :type return_tuple: Boolean
+    :param return_tuple: True or False
+
+    :rtype: Tuple, or Boolean
+    :returns: Tuple, or Boolean
 
     """
-    regex_ip_and_mask = __re.compile(r"^((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))/((3[0-2])|([1-2]?[0-9]))$")
+    regex_ip_and_mask = __re.compile(r'^((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])'
+                                     r'|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?'
+                                     r'[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))/((3[0-2])|'
+                                     r'([1-2]?[0-9]))$')
     if return_tuple:
         while not regex_ip_and_mask.match(ip_addr_and_mask):
             print("Not a good IP and CIDR mask combo.")
@@ -276,14 +264,19 @@ def ip_mask(ip_addr_and_mask, return_tuple=True):
 def ip(ip_addr, return_tuple=True):
     """
     Function to check if a address is good
-    Args:
-        ip_addr: IP address in the following format 192.168.1.1
-        return_tuple: Set to True it returns a IP, set to False returns True or False
 
-    Returns: see return_tuple for return options
+    :type ip_addr: String
+    :param ip_addr: String format 192.168.1.1
+    :type return_tuple: Boolean
+    :param return_tuple: True or False
+
+    :rtype: Tuple, or Boolean
+    :returns: Tuple, or Boolean
 
     """
-    regex_ip = __re.compile(r"^((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))$")
+    regex_ip = __re.compile(r'^((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|'
+                            r'(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9])'
+                            r')\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))$')
     if return_tuple:
         while not regex_ip.match(ip_addr):
             print("Not a good IP.")
@@ -300,11 +293,14 @@ def ip(ip_addr, return_tuple=True):
 def cidr_check(cidr, return_cidr=True):
     """
     Function to verify a good CIDR value
-    Args:
-        cidr: CIDR value 0 to 32
-        return_cidr: Set to True it returns a CIDR value, set to False returns True or False
 
-    Returns: see return_cidr for return options
+    :type cidr: Integer
+    :param cidr: 30
+    :type return_cidr: Boolean
+    :param return_cidr: True or False
+
+    :rtype: String
+    :returns: String
 
     """
     try:
@@ -332,11 +328,14 @@ def cidr_check(cidr, return_cidr=True):
 def get_neighbor_ip(ip_addr, cidr="30"):
     """
     Function to figure out the IP's between neighbors address
-    Args:
-        ip_addr: Unicast IP address in the following format 192.168.1.1
-        cidr: CIDR value of 30, or 31
 
-    Returns: returns Our IP and the Neighbor IP in a tuple
+    :type ip_addr: String
+    :param ip_addr: String format 192.168.1.1
+    :type cidr: String
+    :param cidr: CIDR value of 30, or 31
+
+    :rtype: Tuple
+    :returns: returns Our IP and the Neighbor IP in a tuple
 
     """
     our_octet = None
@@ -358,7 +357,7 @@ def get_neighbor_ip(ip_addr, cidr="30"):
                     elif ranger == 2:
                         our_octet = max_counter
                         neighbor_octet = max_counter + 1
-                        break   
+                        break
                 max_counter += ranger
             except UnboundLocalError:
                 print("The mask between the neighbors must be 30, or 31")
@@ -382,11 +381,14 @@ def get_neighbor_ip(ip_addr, cidr="30"):
 def whole_subnet_maker(ip_addr, cidr):
     """
     Function to return a whole subnet value from a IP address and CIDR pair
-    Args:
-        ip_addr: Unicast or Multicast IP address or subnet in the following format 192.168.1.1, 239.1.1.1
-        cidr: CIDR value of 0 to 32
 
-    Returns: returns the corrected whole subnet
+    :type ip_addr: String
+    :param ip_addr: String format 192.168.1.1
+    :type cidr: String
+    :param cidr: CIDR value of 0 to 32
+
+    :rtype: String
+    :returns: returns the corrected whole subnet
 
     """
     if ucast_ip(ip_addr, False) == False and mcast_ip(ip_addr, False) == False:
@@ -413,7 +415,7 @@ def whole_subnet_maker(ip_addr, cidr):
         cidr_2 = 256 - cidr_int
         while cidr_count < 300:
             if octet_int >= cidr_count and octet_int <= cidr_2:
-                    cidr_int = cidr_count
+                cidr_int = cidr_count
             cidr_count = cidr_2
             cidr_2 = cidr_2 + cidr_v
         return str(cidr_int)
@@ -441,11 +443,14 @@ def whole_subnet_maker(ip_addr, cidr):
 def subnet_range(ip_net, cidr):
     """
     Function to return a subnet range value from a IP address and CIDR pair
-    Args:
-        ip_net: Unicast or Multicast IP address or subnet in the following format 192.168.1.1, 239.1.1.1
-        cidr: CIDR value of 1 to 32
 
-    Returns: returns a dictionary of info
+    :type ip_net: String
+    :param ip_net: String format 192.168.1.1
+    :type cidr: String
+    :param cidr: CIDR value of 1 to 32
+
+    :rtype: Dict
+    :returns: returns a dictionary of info
 
     """
     subnets_dict = dict()
@@ -502,11 +507,14 @@ def subnet_range(ip_net, cidr):
 def all_subnets_possible(ip_net, cidr):
     """
     Function to return every subnet a ip can belong to with a longer prefix
-    Args:
-        ip_net: Unicast or Multicast IP address or subnet in the following format 192.168.1.1, 239.1.1.1
-        cidr: CIDR value of 0 to 32
 
-    Returns: returns a list of subnets
+    :type ip_net: String
+    :param ip_net: String format 192.168.1.1
+    :type cidr: String
+    :param cidr: CIDR value of 0 to 32
+
+    :rtype: List
+    :returns: A List of subnets
 
     """
     return all_subnets_longer_prefix(ip_net, cidr)
@@ -515,11 +523,14 @@ def all_subnets_possible(ip_net, cidr):
 def all_subnets_longer_prefix(ip_net, cidr):
     """
     Function to return every subnet a ip can belong to with a longer prefix
-    Args:
-        ip_net: Unicast or Multicast IP address or subnet in the following format 192.168.1.1, 239.1.1.1
-        cidr: CIDR value of 0 to 32
 
-    Returns: returns a list of subnets
+    :type ip_net: String
+    :param ip_net: String format 192.168.1.1
+    :type cidr: String
+    :param cidr: CIDR value of 0 to 32
+
+    :rtype: List
+    :returns: A List of subnets
 
     """
     subnets_list = list()
@@ -536,12 +547,16 @@ def all_subnets_longer_prefix(ip_net, cidr):
 def all_subnets_shorter_prefix(ip_net, cidr, include_default=False):
     """
     Function to return every subnet a ip can belong to with a shorter prefix
-    Args:
-        ip_net: Unicast or Multicast IP address or subnet in the following format 192.168.1.1, 239.1.1.1
-        cidr: CIDR value of 0 to 32
-        include_default: If you want the list to inlclude the default route set to True
 
-    Returns: returns a list of subnets
+    :type ip_net: String
+    :param ip_net: String format 192.168.1.1
+    :type cidr: String
+    :param cidr: CIDR value of 0 to 32
+    :type include_default: Boolean
+    :param include_default: True or False
+
+    :rtype: List
+    :returns: A List of subnets
 
     """
     subnets_list = list()
@@ -565,11 +580,15 @@ def all_subnets_shorter_prefix(ip_net, cidr, include_default=False):
 def all_ip_address_in_subnet(ip_net, cidr):
     """
     Function to return every ip in a subnet
-    :param ip_net: Unicast or Multicast IP address or subnet in the following format 192.168.1.1, 239.1.1.1
+
+    :type ip_net: String
+    :param ip_net: String format 192.168.1.1
+    :type cidr: String
     :param cidr: CIDR value of 0 to 32
-    :return: 
-        A list of ip address's
-    
+
+    :rtype: List
+    :returns: A List of IPv4 Address's
+
     """
     ip_address_list = list()
     if not ip_mask('{ip_net}/{cidr}'.format(ip_net=ip_net, cidr=cidr), return_tuple=False):
@@ -590,11 +609,14 @@ def all_ip_address_in_subnet(ip_net, cidr):
 def number_check(check, return_number=True):
     """
     Function to verify item entered is a number
-    Args:
-        check: Thing to check for a number
-        return_number: Set to True it returns a number value, set to False returns True or False
 
-    Returns: Check return_number for return options
+    :type check: Anything
+    :param check: What to check
+    :type return_number: Boolean
+    :param return_number: True or False
+
+    :rtype: Boolean
+    :returns: Check return_number for return options
 
     """
     try:
@@ -619,15 +641,16 @@ def number_check(check, return_number=True):
         return good
 
 
-def random_cidr_mask(lowest_mask=16): # pragma: no cover
+def random_cidr_mask(lowest_mask=16):
     """
     Function to generate a random CIDR value
-    :param 
-        lowest_mask: An integer value for the lowest mask you want it to generate
-    
-    :return: 
-        A string of a random CIDR mask
-        
+
+    :type lowest_mask: Integer
+    :param  lowest_mask: An integer value for the lowest mask you want it to generate
+
+    :rtype: String
+    :return: A string of a random CIDR mask
+
     """
     if lowest_mask < 33:
         return str(__random.randrange(lowest_mask, 33))
@@ -637,12 +660,13 @@ def random_cidr_mask(lowest_mask=16): # pragma: no cover
         raise ValueError('{lowest_mask} must be 32 or less.'.format(lowest_mask=lowest_mask))
 
 
-def random_ucast_ip(): # pragma: no cover
+def random_ucast_ip():
     """
     Function to generate a random unicast ip address
-    :return: 
-        A unicast IP Address
-    
+
+    :rtype: String
+    :return: A unicast IP Address
+
     """
     first_octet = str(__random.randrange(1, 224))
 
@@ -655,11 +679,12 @@ def random_ucast_ip(): # pragma: no cover
                                                                               fourth_octet=get_other_octetes())
 
 
-def random_mcast_ip(): # pragma: no cover
+def random_mcast_ip():
     """
     Function to generate a random multicast ip address
-    :return: 
-        A multicast IP Address
+
+    :rtype: String
+    :return: A multicast IP Address
 
     """
     first_octet = str(__random.randrange(224, 240))
@@ -673,27 +698,29 @@ def random_mcast_ip(): # pragma: no cover
                                                                               fourth_octet=get_other_octetes())
 
 
-def random_ucast_ip_mask(lowest_mask=16): # pragma: no cover
+def random_ucast_ip_mask(lowest_mask=16):
     """
     Function to generate a random unicast ip address and cidr mask pair in the following format X.X.X.X/X
-    :param 
-        lowest_mask: An integer value for the lowest mask you want it to generate
-        
-    :return: 
-        A unicast IP Address and CIDR pair in the following format X.X.X.X/X
-        
+
+    :type lowest_mask: Integer
+    :param  lowest_mask: An integer value for the lowest mask you want it to generate
+
+    :rtype: String
+    :return: A unicast IP Address and CIDR pair in the following format X.X.X.X/X
+
     """
     return '{ip_addr}/{cidr}'.format(ip_addr=random_ucast_ip(), cidr=random_cidr_mask(lowest_mask))
 
 
-def random_mcast_ip_mask(lowest_mask=16): # pragma: no cover
+def random_mcast_ip_mask(lowest_mask=16):
     """
     Function to generate a random multicast ip address and cidr mask pair in the following format X.X.X.X/X
-    :param 
-        lowest_mask: An integer value for the lowest mask you want it to generate
 
-    :return: 
-        A multicast IP Address and CIDR pair in the following format X.X.X.X/X
+    :type lowest_mask: Integer
+    :param  lowest_mask: An integer value for the lowest mask you want it to generate
+
+    :rtype: String
+    :return: A multicast IP Address and CIDR pair in the following format X.X.X.X/X
 
     """
     return '{ip_addr}/{cidr}'.format(ip_addr=random_mcast_ip(), cidr=random_cidr_mask(lowest_mask))
