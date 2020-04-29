@@ -17,6 +17,10 @@ sys.path.append(base_path)
 from ipaddresstools.ipaddresstools import __version__ as version
 
 
+# -- Added for readthedocs.org -----------------------------------------------
+
+master_doc = 'index'
+
 # -- Project information -----------------------------------------------------
 
 # The full version, including alpha/beta/rc tags
