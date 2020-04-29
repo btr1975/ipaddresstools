@@ -120,7 +120,7 @@ def ucast_ip_mask(ip_addr_and_mask, return_tuple=True):
                                            r'(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|'
                                            r'(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|'
                                            r'([1-9]?[0-9]))/((3[0-2])|([1-2]?[0-9]))$')
-    if return_tuple:
+    if return_tuple:  # pragma: no cover
         while not regex_ucast_ip_and_mask.match(ip_addr_and_mask):
             print("Not a good unicast IP and CIDR mask combo.")
             print("Please try again.")
@@ -153,7 +153,7 @@ def ucast_ip(ip_addr, return_tuple=True):
                                   r'(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|'
                                   r'(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|'
                                   r'([1-9]?[0-9]))$')
-    if return_tuple:
+    if return_tuple:  # pragma: no cover
         while not regex_ucast_ip.match(ip_addr):
             print("Not a good unicast IP.")
             print("Please try again.")
@@ -183,7 +183,7 @@ def mcast_ip_mask(ip_addr_and_mask, return_tuple=True):
                                            r'(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|'
                                            r'([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|'
                                            r'([1-9]?[0-9]))/((3[0-2])|([1-2][0-9])|[3-9]))$')
-    if return_tuple:
+    if return_tuple:  # pragma: no cover
         while not regex_mcast_ip_and_mask.match(ip_addr_and_mask):
             print("Not a good multicast IP and CIDR mask combo.")
             print("Please try again.")
@@ -215,7 +215,7 @@ def mcast_ip(ip_addr, return_tuple=True):
     regex_mcast_ip = __re.compile(r'^(((2[2-3][4-9])|(23[0-3]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]'
                                   r'))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4]'
                                   r'[0-9])|(1[0-9][0-9])|([1-9]?[0-9])))$')
-    if return_tuple:
+    if return_tuple:  # pragma: no cover
         while not regex_mcast_ip.match(ip_addr):
             print("Not a good multicast IP.")
             print("Please try again.")
@@ -245,7 +245,7 @@ def ip_mask(ip_addr_and_mask, return_tuple=True):
                                      r'|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?'
                                      r'[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))/((3[0-2])|'
                                      r'([1-2]?[0-9]))$')
-    if return_tuple:
+    if return_tuple:  # pragma: no cover
         while not regex_ip_and_mask.match(ip_addr_and_mask):
             print("Not a good IP and CIDR mask combo.")
             print("Please try again.")
@@ -255,7 +255,7 @@ def ip_mask(ip_addr_and_mask, return_tuple=True):
         cidr = ip_cidr_split[1]
         return ip_addr, cidr
     elif not return_tuple:
-        if not regex_ip_and_mask.match(ip_addr_and_mask):
+        if not regex_ip_and_mask.match(ip_addr_and_mask):  # pragma: no cover
             return False
         else:
             return True
@@ -277,7 +277,7 @@ def ip(ip_addr, return_tuple=True):
     regex_ip = __re.compile(r'^((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|'
                             r'(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9])'
                             r')\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))$')
-    if return_tuple:
+    if return_tuple:  # pragma: no cover
         while not regex_ip.match(ip_addr):
             print("Not a good IP.")
             print("Please try again.")
@@ -309,7 +309,7 @@ def cidr_check(cidr, return_cidr=True):
         else:
             good_cidr = True
         if return_cidr:
-            while not good_cidr:
+            while not good_cidr:  # pragma: no cover
                 print("Sorry the CIDR value %s is not a valid value must be a value of 0 to 32.  Please try again."
                       % (cidr,))
                 cidr = input("What is the mask for in CIDR format?: ")
@@ -320,7 +320,7 @@ def cidr_check(cidr, return_cidr=True):
             return cidr
         elif not return_cidr:
             return good_cidr
-    except ValueError:
+    except ValueError:  # pragma: no cover
         LOGGER.critical('Function cidr_check expected a number but got {item}'.format(item=cidr))
         raise ValueError("The input needs to be a number!!")
 
@@ -358,8 +358,8 @@ def get_neighbor_ip(ip_addr, cidr="30"):
                         our_octet = max_counter
                         neighbor_octet = max_counter + 1
                         break
-                max_counter += ranger
-            except UnboundLocalError:
+                max_counter += ranger  # pragma: no cover
+            except UnboundLocalError:  # pragma: no cover
                 print("The mask between the neighbors must be 30, or 31")
                 exit("BAD NEIGHBOR MASK")
         if int(ip_addr_split[3]) == our_octet:
@@ -368,11 +368,11 @@ def get_neighbor_ip(ip_addr, cidr="30"):
         elif int(ip_addr_split[3]) == neighbor_octet:
             neighbor_ip_addr = "%s.%s.%s.%i" % (ip_addr_split[0], ip_addr_split[1], ip_addr_split[2], our_octet)
             our_ip_addr = "%s.%s.%s.%i" % (ip_addr_split[0], ip_addr_split[1], ip_addr_split[2], neighbor_octet)
-        else:
+        else:  # pragma: no cover
             our_ip_addr = "%s.%s.%s.%i" % (ip_addr_split[0], ip_addr_split[1], ip_addr_split[2], our_octet)
             neighbor_ip_addr = "%s.%s.%s.%i" % (ip_addr_split[0], ip_addr_split[1], ip_addr_split[2], neighbor_octet)
         return our_ip_addr, neighbor_ip_addr
-    except IndexError:
+    except IndexError:  # pragma: no cover
         LOGGER.critical('Function get_neighbor_ip IndexError ip_addr {item} cidr {cidr}'.format(item=ip_addr,
                                                                                                 cidr=cidr))
         raise IndexError("You have entered invalid input, you must enter a ipv4 address")
@@ -391,10 +391,10 @@ def whole_subnet_maker(ip_addr, cidr):
     :returns: returns the corrected whole subnet
 
     """
-    if ucast_ip(ip_addr, False) == False and mcast_ip(ip_addr, False) == False:
+    if ucast_ip(ip_addr, False) == False and mcast_ip(ip_addr, False) == False:  # pragma: no cover
         LOGGER.critical('Function whole_subnet_maker ip_addr {item}'.format(item=ip_addr))
         raise ValueError("Not a good ipv4 address")
-    if not cidr_check(cidr, False):
+    if not cidr_check(cidr, False):  # pragma: no cover
         LOGGER.critical('Function whole_subnet_maker cidr {item}'.format(item=cidr))
         raise ValueError("Not a good CIDR value should be 0 to 32")
 
@@ -436,7 +436,7 @@ def whole_subnet_maker(ip_addr, cidr):
         octet = subnet_corrector(ip_addr_split[0], cidr)
         completed = octet + ".0.0.0"
         return completed
-    else:
+    else:  # pragma: no cover
         return "0.0.0.0"
 
 
@@ -537,7 +537,7 @@ def all_subnets_longer_prefix(ip_net, cidr):
     while int(cidr) <= 32:
         try:
             subnets_list.append('%s/%s' % (whole_subnet_maker(ip_net, cidr), cidr))
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             LOGGER.critical('Function all_subnets_longer_prefix {item}'.format(item=e))
             pass
         cidr = str(int(cidr) + 1)
@@ -561,7 +561,7 @@ def all_subnets_shorter_prefix(ip_net, cidr, include_default=False):
     """
     subnets_list = list()
     if include_default:
-        while int(cidr) >= 0:
+        while int(cidr) >= 0:  # pragma: no cover
             try:
                 subnets_list.append('%s/%s' % (whole_subnet_maker(ip_net, cidr), cidr))
             except Exception as e:
@@ -571,7 +571,7 @@ def all_subnets_shorter_prefix(ip_net, cidr, include_default=False):
         while int(cidr) > 0:
             try:
                 subnets_list.append('%s/%s' % (whole_subnet_maker(ip_net, cidr), cidr))
-            except Exception as e:
+            except Exception as e:  # pragma: no cover
                 LOGGER.critical('Function all_subnets_shorter_prefix {item}'.format(item=e))
             cidr = str(int(cidr) - 1)
     return subnets_list
@@ -591,7 +591,7 @@ def all_ip_address_in_subnet(ip_net, cidr):
 
     """
     ip_address_list = list()
-    if not ip_mask('{ip_net}/{cidr}'.format(ip_net=ip_net, cidr=cidr), return_tuple=False):
+    if not ip_mask('{ip_net}/{cidr}'.format(ip_net=ip_net, cidr=cidr), return_tuple=False):  # pragma: no cover
         LOGGER.critical('{network} is not a valid IPv4 network'.format(network='{ip_net}/{cidr}'.format(ip_net=ip_net,
                                                                                                         cidr=cidr)))
         raise ValueError('{network} is not a valid IPv4 network'.format(network='{ip_net}/{cidr}'.format(ip_net=ip_net,
@@ -625,7 +625,7 @@ def number_check(check, return_number=True):
     except ValueError:
         LOGGER.critical('Function number_check ValueError {item}'.format(item=check))
         good = False
-    if return_number:
+    if return_number:  # pragma: no cover
         while not good:
             print("That is not a number.")
             print("Please try again.")

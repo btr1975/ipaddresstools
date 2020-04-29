@@ -1,12 +1,14 @@
 import pytest
 import sys
 import os
+import re
 base_path = os.path.join(os.path.abspath(os.path.dirname(__name__)))
 sys.path.append(os.path.join(base_path, 'ipaddresstools'))
 from ipaddresstools import ucast_ip, ucast_ip_mask, mcast_ip, mcast_ip_mask, cidr_check, \
                            get_neighbor_ip, whole_subnet_maker, number_check, ip, subnet_range, \
                            all_subnets_possible, all_subnets_longer_prefix, all_subnets_shorter_prefix, \
-                           all_ip_address_in_subnet
+                           all_ip_address_in_subnet, random_cidr_mask, random_ucast_ip, random_mcast_ip, \
+                           random_ucast_ip_mask, random_mcast_ip_mask
 
 
 mask_conversion_test_data = [
@@ -144,7 +146,7 @@ def test_ip_bad():
     assert ip('192.168.1.1000', return_tuple=False) is False
 
 
-def test_subnet_range():
+def test_subnet_range_24():
     assert subnet_range('192.168.1.1', 24) == {'RANGE': '192.168.1.1 to 192.168.1.254',
                                                'CIDRVAL': '24',
                                                'NET': '192.168.1.0',
@@ -153,6 +155,39 @@ def test_subnet_range():
                                                'MASK': '255.255.255.0',
                                                'IP': '192.168.1.1',
                                                'INVMASK': '0.0.0.255'}
+
+
+def test_subnet_range_16():
+    assert subnet_range('192.168.1.1', 16) == {'RANGE': '192.168.0.1 to 192.168.255.254',
+                                               'CIDRVAL': '16',
+                                               'NET': '192.168.0.0',
+                                               'CIDR': '192.168.0.0/16',
+                                               'BCAST': '192.168.255.255',
+                                               'MASK': '255.255.0.0',
+                                               'IP': '192.168.1.1',
+                                               'INVMASK': '0.0.255.255'}
+
+
+def test_subnet_range_8():
+    assert subnet_range('192.168.1.1', 8) == {'RANGE': '192.0.0.1 to 192.255.255.254',
+                                               'CIDRVAL': '8',
+                                               'NET': '192.0.0.0',
+                                               'CIDR': '192.0.0.0/8',
+                                               'BCAST': '192.255.255.255',
+                                               'MASK': '255.0.0.0',
+                                               'IP': '192.168.1.1',
+                                               'INVMASK': '0.255.255.255'}
+
+
+def test_subnet_range_1():
+    assert subnet_range('192.168.1.1', 1) == {'RANGE': '128.0.0.1 to 255.255.255.254',
+                                               'CIDRVAL': '1',
+                                               'NET': '128.0.0.0',
+                                               'CIDR': '128.0.0.0/1',
+                                               'BCAST': '255.255.255.255',
+                                               'MASK': '128.0.0.0',
+                                               'IP': '192.168.1.1',
+                                               'INVMASK': '127.255.255.255'}
 
 
 def test_all_subnets_possible():
@@ -184,3 +219,47 @@ def test_all_ip_address_in_subnet():
                                                            '192.168.1.8', '192.168.1.9', '192.168.1.10', '192.168.1.11',
                                                            '192.168.1.12', '192.168.1.13', '192.168.1.14',
                                                            '192.168.1.15']
+
+
+def test_random_cidr_mask():
+    assert int(random_cidr_mask()) in range(16, 33)
+
+
+def test_random_cidr_mask_bad():
+    with pytest.raises(ValueError):
+        random_cidr_mask(35)
+
+
+def test_random_ucast_ip():
+    regex_ucast_ip = re.compile(r'^((22[0-3])|(2[0-1][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|'
+                                r'(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|'
+                                r'(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|'
+                                r'([1-9]?[0-9]))$')
+
+    assert re.match(regex_ucast_ip, random_ucast_ip())
+
+
+def test_random_mcast_ip():
+    regex_mcast_ip = re.compile(r'^(((2[2-3][4-9])|(23[0-3]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]'
+                                r'))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4]'
+                                r'[0-9])|(1[0-9][0-9])|([1-9]?[0-9])))$')
+
+    assert re.match(regex_mcast_ip, random_mcast_ip())
+
+
+def test_random_ucast_ip_mask():
+    regex_ucast_ip_and_mask = re.compile(r'^((22[0-3])|(2[0-1][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|'
+                                         r'(2[0-4][0-9])|(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|'
+                                         r'(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|'
+                                         r'([1-9]?[0-9]))/((3[0-2])|([1-2]?[0-9]))$')
+
+    assert re.match(regex_ucast_ip_and_mask, random_ucast_ip_mask())
+
+
+def test_random_mcast_ip_mask():
+    regex_mcast_ip_and_mask = re.compile(r'^(((2[2-3][4-9])|(23[0-3]))\.((25[0-5])|(2[0-4][0-9])|'
+                                         r'(1[0-9][0-9])|([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|'
+                                         r'([1-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|(1[0-9][0-9])|'
+                                         r'([1-9]?[0-9]))/((3[0-2])|([1-2][0-9])|[3-9]))$')
+
+    assert re.match(regex_mcast_ip_and_mask, random_mcast_ip_mask())
