@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ##########################################################
-# Script Name: modIpAddressTools.py                      #
+# Script Name: ipaddresstools.py                         #
 # Script Type: Python                                    #
 # Updated By: Benjamin P. Trachtenberg                   #
 # Date Written 1/11/2015                                 #
@@ -18,7 +18,7 @@ __copyright__ = "Copyright (c) 2020, Benjamin P. Trachtenberg"
 __credits__ = None
 __license__ = 'The MIT License (MIT)'
 __status__ = 'prod'
-__version_info__ = (2020, 4, 29, 1)
+__version_info__ = (2020, 4, 30, 1)
 __version__ = '.'.join(map(str, __version_info__))
 __maintainer__ = 'Benjamin P. Trachtenberg'
 __email__ = 'e_ben_75-python@yahoo.com'
