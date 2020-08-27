@@ -34,4 +34,4 @@ jobs:
         coverage report
     - name: Lint with pylint
       run: |
-        pylint --disable=R1705,R1710,W1202,W0707,R1723,R1722,C0121,R1716,W0703 ./ipaddresstools/ipaddresstools.py
+        pylint --disable=R1705,R1710,W1202,W0707,R1723,R1722,C0121,R1716,W0703,W0107,R1720 ./ipaddresstools/ipaddresstools.py
