@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="https://github.com/btr1975/ipaddresstools/actions?query=workflow%3A%22Unit-Testing%2C+Coverage%2C+Linting+on+master+and+develop%22"><img alt="Toolkit unit tests status" src="https://github.com/btr1975/ipaddresstools/workflows/Unit-Testing,%20Coverage,%20Linting%20on%20master%20and%20develop/badge.svg"></a>
+</p>
+
 # Python Script: ipaddresstools
 ### Current version: 1.2.9
 ### [Documentaion](https://ipaddresstools.readthedocs.io/)
