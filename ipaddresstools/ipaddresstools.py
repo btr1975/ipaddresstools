@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-##########################################################
-# Script Name: ipaddresstools.py                         #
-# Script Type: Python                                    #
-# Updated By: Benjamin P. Trachtenberg                   #
-# Date Written 1/11/2015                                 #
-#                                                        #
-# Description:                                           #
-# Collection of tools for IP Address's                   #
-#                                                        #
-##########################################################
+"""
+ Script Name: ipaddresstools.py
+ Script Type: Python
+ Updated By: Benjamin P. Trachtenberg
+ Date Written 1/11/2015
+
+ Description:
+ Collection of tools for IP Address's
+
+"""
 import logging
 import re as __re
 import ipaddress as __ipaddress
