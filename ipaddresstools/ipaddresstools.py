@@ -25,12 +25,6 @@ __email__ = 'e_ben_75-python@yahoo.com'
 
 LOGGER = logging.getLogger(__name__)
 
-""" 
-Dictionaries included in v1.0.0
-
-__mask_conversion = Used to convert IP masks and such
-
-"""
 
 __mask_conversion = {
     0: {"OCT1": 0, "OCT2": 0, "OCT3": 0, "OCT4": 0, "MASK": "0.0.0.0", "INVMASK": "255.255.255.255",
