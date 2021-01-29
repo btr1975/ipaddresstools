@@ -3,7 +3,7 @@
 </p>
 
 # Python Script: ipaddresstools
-### Current version: 1.2.9
+### Current version: 1.2.11
 ### [Documentaion](https://ipaddresstools.readthedocs.io/)
 
 ## Written By: Benjamin P. Trachtenberg 
@@ -17,7 +17,7 @@
 
 ### Requirements
 
-* Nothing Specific, I would suggest Python 3.3 and above.
+* Nothing Specific, I would suggest Python 3.6 and above.
 
 ### Installation
 
