@@ -14,7 +14,9 @@ import os
 import sys
 base_path = os.path.split(os.path.join(os.path.abspath(os.path.dirname(__name__))))[0]
 sys.path.append(base_path)
-from ipaddresstools.ipaddresstools import __version__ as version
+about = {}
+with open(os.path.join(base_path, 'ipaddresstools', 'version.py'), 'r', encoding='utf-8') as f:
+    exec(f.read(), about)
 
 
 # -- Added for readthedocs.org -----------------------------------------------
@@ -24,11 +26,11 @@ master_doc = 'index'
 # -- Project information -----------------------------------------------------
 
 # The full version, including alpha/beta/rc tags
-release = version
+release = about['__version__']
 
 project = 'ipaddresstools version: {}'.format(release)
-copyright = '2020, Ben Trachtenberg'
-author = 'Ben Trachtenberg'
+copyright = about['__copyright__']
+author = about['__author__']
 
 
 # -- General configuration ---------------------------------------------------
