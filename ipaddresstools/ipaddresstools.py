@@ -306,7 +306,7 @@ def cidr_check(cidr, return_cidr=True):
         elif not return_cidr:
             return good_cidr
     except ValueError:  # pragma: no cover
-        LOGGER.critical(f'Function cidr_check expected a number but got {cidr}')
+        LOGGER.critical('Function cidr_check expected a number but got {cidr}'.format(cidr=cidr))
         raise ValueError("The input needs to be a number!!")
 
 
@@ -358,7 +358,8 @@ def get_neighbor_ip(ip_addr, cidr="30"):
             neighbor_ip_addr = f'{ip_addr_split[0]}.{ip_addr_split[1]}.{ip_addr_split[2]}.{neighbor_octet}'
         return our_ip_addr, neighbor_ip_addr
     except IndexError:  # pragma: no cover
-        LOGGER.critical(f'Function get_neighbor_ip IndexError ip_addr {ip_addr} cidr {cidr}')
+        LOGGER.critical('Function get_neighbor_ip IndexError ip_addr {ip_addr} cidr {cidr}'.format(ip_addr=ip_addr,
+                                                                                                   cidr=cidr))
         raise IndexError("You have entered invalid input, you must enter a ipv4 address")
 
 
@@ -376,10 +377,10 @@ def whole_subnet_maker(ip_addr, cidr):
 
     """
     if ucast_ip(ip_addr, False) == False and mcast_ip(ip_addr, False) == False:  # pragma: no cover
-        LOGGER.critical(f'Function whole_subnet_maker ip_addr {ip_addr}')
+        LOGGER.critical('Function whole_subnet_maker ip_addr {ip_addr}'.format(ip_addr=ip_addr))
         raise ValueError("Not a good ipv4 address")
     if not cidr_check(cidr, False):  # pragma: no cover
-        LOGGER.critical(f'Function whole_subnet_maker cidr {cidr}')
+        LOGGER.critical('Function whole_subnet_maker cidr {cidr}'.format(cidr=cidr))
         raise ValueError("Not a good CIDR value should be 0 to 32")
 
     def subnet_corrector(octet, cidr):
@@ -522,7 +523,7 @@ def all_subnets_longer_prefix(ip_net, cidr):
         try:
             subnets_list.append(f'{whole_subnet_maker(ip_net, cidr)}/{cidr}')
         except Exception as e:  # pragma: no cover
-            LOGGER.critical(f'Function all_subnets_longer_prefix {e}')
+            LOGGER.critical('Function all_subnets_longer_prefix {e}'.format(e=e))
             pass
         cidr = str(int(cidr) + 1)
     return subnets_list
@@ -549,14 +550,14 @@ def all_subnets_shorter_prefix(ip_net, cidr, include_default=False):
             try:
                 subnets_list.append(f'{whole_subnet_maker(ip_net, cidr)}/{cidr}')
             except Exception as e:
-                LOGGER.critical(f'Function all_subnets_shorter_prefix {e}')
+                LOGGER.critical('Function all_subnets_shorter_prefix {e}'.format(e=e))
             cidr = str(int(cidr) - 1)
     else:
         while int(cidr) > 0:
             try:
                 subnets_list.append(f'{whole_subnet_maker(ip_net, cidr)}/{cidr}')
             except Exception as e:  # pragma: no cover
-                LOGGER.critical(f'Function all_subnets_shorter_prefix {e}')
+                LOGGER.critical('Function all_subnets_shorter_prefix {e}'.format(e=e))
             cidr = str(int(cidr) - 1)
     return subnets_list
 
@@ -577,7 +578,7 @@ def all_ip_address_in_subnet(ip_net, cidr):
     ip_address_list = list()
     if not ip_mask(f'{ip_net}/{cidr}', return_tuple=False):  # pragma: no cover
         network = f'{ip_net}/{cidr}'
-        LOGGER.critical(f'{network} is not a valid IPv4 network')
+        LOGGER.critical('{network} is not a valid IPv4 network'.format(network=network))
         raise ValueError(f'{network} is not a valid IPv4 network')
 
     else:
@@ -606,7 +607,7 @@ def number_check(check, return_number=True):
         int(check)
         good = True
     except ValueError:
-        LOGGER.critical(f'Function number_check ValueError {check}')
+        LOGGER.critical('Function number_check ValueError {check}'.format(check=check))
         good = False
     if return_number:  # pragma: no cover
         while not good:
@@ -617,7 +618,7 @@ def number_check(check, return_number=True):
                 int(check)
                 good = True
             except ValueError:
-                LOGGER.critical(f'Function number_check ValueError {check}')
+                LOGGER.critical('Function number_check ValueError {check}'.format(check=check))
                 good = False
         return check
     else:
@@ -639,7 +640,7 @@ def random_cidr_mask(lowest_mask=16):
         return str(__random.randrange(lowest_mask, 33))
 
     else:
-        LOGGER.critical(f'{lowest_mask} must be 32 or less.')
+        LOGGER.critical('{lowest_mask} must be 32 or less.'.format(lowest_mask=lowest_mask))
         raise ValueError(f'{lowest_mask} must be 32 or less.')
 
 
