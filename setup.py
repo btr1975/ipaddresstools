@@ -20,7 +20,7 @@ tests_require = [
 setup(
     name=about['__title__'],
     version=about['__version__'],
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     description=about['__description__'],
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -50,7 +50,6 @@ setup(
         'Operating System :: Microsoft :: Windows',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3 :: Only',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',

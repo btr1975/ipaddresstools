@@ -295,8 +295,8 @@ def cidr_check(cidr, return_cidr=True):
             good_cidr = True
         if return_cidr:
             while not good_cidr:  # pragma: no cover
-                print("Sorry the CIDR value %s is not a valid value must be a value of 0 to 32.  Please try again."
-                      % (cidr,))
+                print(f"Sorry the CIDR value {cidr} is not a valid value must be a value of 0 to 32.  "
+                      f"Please try again.")
                 cidr = input("What is the mask for in CIDR format?: ")
                 if int(cidr) < 0 or int(cidr) > 32:
                     good_cidr = False
@@ -306,7 +306,7 @@ def cidr_check(cidr, return_cidr=True):
         elif not return_cidr:
             return good_cidr
     except ValueError:  # pragma: no cover
-        LOGGER.critical('Function cidr_check expected a number but got {item}'.format(item=cidr))
+        LOGGER.critical(f'Function cidr_check expected a number but got {cidr}')
         raise ValueError("The input needs to be a number!!")
 
 
@@ -348,18 +348,17 @@ def get_neighbor_ip(ip_addr, cidr="30"):
                 print("The mask between the neighbors must be 30, or 31")
                 exit("BAD NEIGHBOR MASK")
         if int(ip_addr_split[3]) == our_octet:
-            our_ip_addr = "%s.%s.%s.%i" % (ip_addr_split[0], ip_addr_split[1], ip_addr_split[2], our_octet)
-            neighbor_ip_addr = "%s.%s.%s.%i" % (ip_addr_split[0], ip_addr_split[1], ip_addr_split[2], neighbor_octet)
+            our_ip_addr = f'{ip_addr_split[0]}.{ip_addr_split[1]}.{ip_addr_split[2]}.{our_octet}'
+            neighbor_ip_addr = f'{ip_addr_split[0]}.{ip_addr_split[1]}.{ip_addr_split[2]}.{neighbor_octet}'
         elif int(ip_addr_split[3]) == neighbor_octet:
-            neighbor_ip_addr = "%s.%s.%s.%i" % (ip_addr_split[0], ip_addr_split[1], ip_addr_split[2], our_octet)
-            our_ip_addr = "%s.%s.%s.%i" % (ip_addr_split[0], ip_addr_split[1], ip_addr_split[2], neighbor_octet)
+            neighbor_ip_addr = f'{ip_addr_split[0]}.{ip_addr_split[1]}.{ip_addr_split[2]}.{our_octet}'
+            our_ip_addr = f'{ip_addr_split[0]}.{ip_addr_split[1]}.{ip_addr_split[2]}.{neighbor_octet}'
         else:  # pragma: no cover
-            our_ip_addr = "%s.%s.%s.%i" % (ip_addr_split[0], ip_addr_split[1], ip_addr_split[2], our_octet)
-            neighbor_ip_addr = "%s.%s.%s.%i" % (ip_addr_split[0], ip_addr_split[1], ip_addr_split[2], neighbor_octet)
+            our_ip_addr = f'{ip_addr_split[0]}.{ip_addr_split[1]}.{ip_addr_split[2]}.{our_octet}'
+            neighbor_ip_addr = f'{ip_addr_split[0]}.{ip_addr_split[1]}.{ip_addr_split[2]}.{neighbor_octet}'
         return our_ip_addr, neighbor_ip_addr
     except IndexError:  # pragma: no cover
-        LOGGER.critical('Function get_neighbor_ip IndexError ip_addr {item} cidr {cidr}'.format(item=ip_addr,
-                                                                                                cidr=cidr))
+        LOGGER.critical(f'Function get_neighbor_ip IndexError ip_addr {ip_addr} cidr {cidr}')
         raise IndexError("You have entered invalid input, you must enter a ipv4 address")
 
 
@@ -377,10 +376,10 @@ def whole_subnet_maker(ip_addr, cidr):
 
     """
     if ucast_ip(ip_addr, False) == False and mcast_ip(ip_addr, False) == False:  # pragma: no cover
-        LOGGER.critical('Function whole_subnet_maker ip_addr {item}'.format(item=ip_addr))
+        LOGGER.critical(f'Function whole_subnet_maker ip_addr {ip_addr}')
         raise ValueError("Not a good ipv4 address")
     if not cidr_check(cidr, False):  # pragma: no cover
-        LOGGER.critical('Function whole_subnet_maker cidr {item}'.format(item=cidr))
+        LOGGER.critical(f'Function whole_subnet_maker cidr {cidr}')
         raise ValueError("Not a good CIDR value should be 0 to 32")
 
     def subnet_corrector(octet, cidr):
@@ -407,19 +406,19 @@ def whole_subnet_maker(ip_addr, cidr):
     ip_addr_split = ip_addr.split(".")
     if int(cidr) >= 24:
         octet = subnet_corrector(ip_addr_split[3], cidr)
-        completed = ip_addr_split[0] + "." + ip_addr_split[1] + "." + ip_addr_split[2] + "." + octet
+        completed = f'{ip_addr_split[0]}.{ip_addr_split[1]}.{ip_addr_split[2]}.{octet}'
         return completed
     elif int(cidr) >= 16:
         octet = subnet_corrector(ip_addr_split[2], cidr)
-        completed = ip_addr_split[0] + "." + ip_addr_split[1] + "." + octet + ".0"
+        completed = f'{ip_addr_split[0]}.{ip_addr_split[1]}.{octet}.0'
         return completed
     elif int(cidr) >= 8:
         octet = subnet_corrector(ip_addr_split[1], cidr)
-        completed = ip_addr_split[0] + "." + octet + ".0.0"
+        completed = f'{ip_addr_split[0]}.{octet}.0.0'
         return completed
     elif int(cidr) >= 1:
         octet = subnet_corrector(ip_addr_split[0], cidr)
-        completed = octet + ".0.0.0"
+        completed = f'{octet}.0.0.0'
         return completed
     else:  # pragma: no cover
         return "0.0.0.0"
@@ -442,15 +441,15 @@ def subnet_range(ip_net, cidr):
     subnet = whole_subnet_maker(ip_net, cidr)
     subnets_dict['IP'] = ip_net
     subnets_dict['NET'] = subnet
-    subnets_dict['CIDR'] = '%s/%s' % (whole_subnet_maker(ip_net, cidr), cidr)
+    subnets_dict['CIDR'] = f'{whole_subnet_maker(ip_net, cidr)}/{cidr}'
     if int(cidr) >= 24:
         subnet_split = subnet.split('.')
         first_ip = int(subnet_split[3]) + 1
         last_ip = (int(subnet_split[3]) + 1) + (253 - int(__mask_conversion[int(cidr)]['OCT4']))
         bcast_ip = (int(subnet_split[3]) + 1) + (254 - int(__mask_conversion[int(cidr)]['OCT4']))
-        temp = '%s.%s.%s.' % (subnet_split[0], subnet_split[1], subnet_split[2])
-        subnets_dict['RANGE'] = '%s%i to %s%i' % (temp, first_ip, temp, last_ip)
-        subnets_dict['BCAST'] = '%s%i' % (temp, bcast_ip)
+        temp = f'{subnet_split[0]}.{subnet_split[1]}.{subnet_split[2]}.'
+        subnets_dict['RANGE'] = f'{temp}{first_ip} to {temp}{last_ip}'
+        subnets_dict['BCAST'] = f'{temp}{bcast_ip}'
         subnets_dict['MASK'] = __mask_conversion[int(cidr)]['MASK']
         subnets_dict['INVMASK'] = __mask_conversion[int(cidr)]['INVMASK']
         subnets_dict['CIDRVAL'] = __mask_conversion[int(cidr)]['CIDR']
@@ -459,9 +458,9 @@ def subnet_range(ip_net, cidr):
         first_ip = int(subnet_split[2])
         last_ip = (int(subnet_split[2]) + 1) + (254 - int(__mask_conversion[int(cidr)]['OCT3']))
         bcast_ip = (int(subnet_split[2]) + 1) + (254 - int(__mask_conversion[int(cidr)]['OCT3']))
-        temp = '%s.%s.' % (subnet_split[0], subnet_split[1])
-        subnets_dict['RANGE'] = '%s%i.1 to %s%i.254' % (temp, first_ip, temp, last_ip)
-        subnets_dict['BCAST'] = '%s%i.255' % (temp, bcast_ip)
+        temp = f'{subnet_split[0]}.{subnet_split[1]}.'
+        subnets_dict['RANGE'] = f'{temp}{first_ip}.1 to {temp}{last_ip}.254'
+        subnets_dict['BCAST'] = f'{temp}{bcast_ip}.255'
         subnets_dict['MASK'] = __mask_conversion[int(cidr)]['MASK']
         subnets_dict['INVMASK'] = __mask_conversion[int(cidr)]['INVMASK']
         subnets_dict['CIDRVAL'] = __mask_conversion[int(cidr)]['CIDR']
@@ -470,9 +469,9 @@ def subnet_range(ip_net, cidr):
         first_ip = int(subnet_split[1])
         last_ip = (int(subnet_split[1]) + 1) + (254 - int(__mask_conversion[int(cidr)]['OCT2']))
         bcast_ip = (int(subnet_split[1]) + 1) + (254 - int(__mask_conversion[int(cidr)]['OCT2']))
-        temp = '%s.' % (subnet_split[0],)
-        subnets_dict['RANGE'] = '%s%i.0.1 to %s%i.255.254' % (temp, first_ip, temp, last_ip)
-        subnets_dict['BCAST'] = '%s%i.255.255' % (temp, bcast_ip)
+        temp = f'{subnet_split[0]}.'
+        subnets_dict['RANGE'] = f'{temp}{first_ip}.0.1 to {temp}{last_ip}.255.254'
+        subnets_dict['BCAST'] = f'{temp}{bcast_ip}.255.255'
         subnets_dict['MASK'] = __mask_conversion[int(cidr)]['MASK']
         subnets_dict['INVMASK'] = __mask_conversion[int(cidr)]['INVMASK']
         subnets_dict['CIDRVAL'] = __mask_conversion[int(cidr)]['CIDR']
@@ -481,8 +480,8 @@ def subnet_range(ip_net, cidr):
         first_ip = int(subnet_split[0])
         last_ip = (int(subnet_split[0]) + 1) + (254 - int(__mask_conversion[int(cidr)]['OCT1']))
         bcast_ip = (int(subnet_split[0]) + 1) + (254 - int(__mask_conversion[int(cidr)]['OCT1']))
-        subnets_dict['RANGE'] = '%i.0.0.1 to %i.255.255.254' % (first_ip, last_ip)
-        subnets_dict['BCAST'] = '%i.255.255.255' % (bcast_ip,)
+        subnets_dict['RANGE'] = f'{first_ip}.0.0.1 to {last_ip}.255.255.254'
+        subnets_dict['BCAST'] = f'{bcast_ip}.255.255.255'
         subnets_dict['MASK'] = __mask_conversion[int(cidr)]['MASK']
         subnets_dict['INVMASK'] = __mask_conversion[int(cidr)]['INVMASK']
         subnets_dict['CIDRVAL'] = __mask_conversion[int(cidr)]['CIDR']
@@ -521,9 +520,9 @@ def all_subnets_longer_prefix(ip_net, cidr):
     subnets_list = list()
     while int(cidr) <= 32:
         try:
-            subnets_list.append('%s/%s' % (whole_subnet_maker(ip_net, cidr), cidr))
+            subnets_list.append(f'{whole_subnet_maker(ip_net, cidr)}/{cidr}')
         except Exception as e:  # pragma: no cover
-            LOGGER.critical('Function all_subnets_longer_prefix {item}'.format(item=e))
+            LOGGER.critical(f'Function all_subnets_longer_prefix {e}')
             pass
         cidr = str(int(cidr) + 1)
     return subnets_list
@@ -548,16 +547,16 @@ def all_subnets_shorter_prefix(ip_net, cidr, include_default=False):
     if include_default:
         while int(cidr) >= 0:  # pragma: no cover
             try:
-                subnets_list.append('%s/%s' % (whole_subnet_maker(ip_net, cidr), cidr))
+                subnets_list.append(f'{whole_subnet_maker(ip_net, cidr)}/{cidr}')
             except Exception as e:
-                LOGGER.critical('Function all_subnets_shorter_prefix {item}'.format(item=e))
+                LOGGER.critical(f'Function all_subnets_shorter_prefix {e}')
             cidr = str(int(cidr) - 1)
     else:
         while int(cidr) > 0:
             try:
-                subnets_list.append('%s/%s' % (whole_subnet_maker(ip_net, cidr), cidr))
+                subnets_list.append(f'{whole_subnet_maker(ip_net, cidr)}/{cidr}')
             except Exception as e:  # pragma: no cover
-                LOGGER.critical('Function all_subnets_shorter_prefix {item}'.format(item=e))
+                LOGGER.critical(f'Function all_subnets_shorter_prefix {e}')
             cidr = str(int(cidr) - 1)
     return subnets_list
 
@@ -576,15 +575,14 @@ def all_ip_address_in_subnet(ip_net, cidr):
 
     """
     ip_address_list = list()
-    if not ip_mask('{ip_net}/{cidr}'.format(ip_net=ip_net, cidr=cidr), return_tuple=False):  # pragma: no cover
-        LOGGER.critical('{network} is not a valid IPv4 network'.format(network='{ip_net}/{cidr}'.format(ip_net=ip_net,
-                                                                                                        cidr=cidr)))
-        raise ValueError('{network} is not a valid IPv4 network'.format(network='{ip_net}/{cidr}'.format(ip_net=ip_net,
-                                                                                                         cidr=cidr)))
+    if not ip_mask(f'{ip_net}/{cidr}', return_tuple=False):  # pragma: no cover
+        network = f'{ip_net}/{cidr}'
+        LOGGER.critical(f'{network} is not a valid IPv4 network')
+        raise ValueError(f'{network} is not a valid IPv4 network')
 
     else:
         ip_net = whole_subnet_maker(ip_net, cidr)
-        net = __ipaddress.ip_network('{ip_net}/{cidr}'.format(ip_net=ip_net, cidr=cidr))
+        net = __ipaddress.ip_network(f'{ip_net}/{cidr}')
         for single_ip in net:
             ip_address_list.append(str(single_ip))
 
@@ -608,7 +606,7 @@ def number_check(check, return_number=True):
         int(check)
         good = True
     except ValueError:
-        LOGGER.critical('Function number_check ValueError {item}'.format(item=check))
+        LOGGER.critical(f'Function number_check ValueError {check}')
         good = False
     if return_number:  # pragma: no cover
         while not good:
@@ -619,7 +617,7 @@ def number_check(check, return_number=True):
                 int(check)
                 good = True
             except ValueError:
-                LOGGER.critical('Function number_check ValueError {item}'.format(item=check))
+                LOGGER.critical(f'Function number_check ValueError {check}')
                 good = False
         return check
     else:
@@ -641,8 +639,8 @@ def random_cidr_mask(lowest_mask=16):
         return str(__random.randrange(lowest_mask, 33))
 
     else:
-        LOGGER.critical('{lowest_mask} must be 32 or less.'.format(lowest_mask=lowest_mask))
-        raise ValueError('{lowest_mask} must be 32 or less.'.format(lowest_mask=lowest_mask))
+        LOGGER.critical(f'{lowest_mask} must be 32 or less.')
+        raise ValueError(f'{lowest_mask} must be 32 or less.')
 
 
 def random_ucast_ip():
@@ -658,10 +656,7 @@ def random_ucast_ip():
     def get_other_octetes():
         return str(__random.randrange(0, 255))
 
-    return '{first_octet}.{second_octet}.{third_octet}.{fourth_octet}'.format(first_octet=first_octet,
-                                                                              second_octet=get_other_octetes(),
-                                                                              third_octet=get_other_octetes(),
-                                                                              fourth_octet=get_other_octetes())
+    return f'{first_octet}.{get_other_octetes()}.{get_other_octetes()}.{get_other_octetes()}'
 
 
 def random_mcast_ip():
@@ -677,10 +672,7 @@ def random_mcast_ip():
     def get_other_octetes():
         return str(__random.randrange(0, 255))
 
-    return '{first_octet}.{second_octet}.{third_octet}.{fourth_octet}'.format(first_octet=first_octet,
-                                                                              second_octet=get_other_octetes(),
-                                                                              third_octet=get_other_octetes(),
-                                                                              fourth_octet=get_other_octetes())
+    return f'{first_octet}.{get_other_octetes()}.{get_other_octetes()}.{get_other_octetes()}'
 
 
 def random_ucast_ip_mask(lowest_mask=16):
@@ -694,7 +686,7 @@ def random_ucast_ip_mask(lowest_mask=16):
     :return: A unicast IP Address and CIDR pair in the following format X.X.X.X/X
 
     """
-    return '{ip_addr}/{cidr}'.format(ip_addr=random_ucast_ip(), cidr=random_cidr_mask(lowest_mask))
+    return f'{random_ucast_ip()}/{random_cidr_mask(lowest_mask)}'
 
 
 def random_mcast_ip_mask(lowest_mask=16):
@@ -708,4 +700,4 @@ def random_mcast_ip_mask(lowest_mask=16):
     :return: A multicast IP Address and CIDR pair in the following format X.X.X.X/X
 
     """
-    return '{ip_addr}/{cidr}'.format(ip_addr=random_mcast_ip(), cidr=random_cidr_mask(lowest_mask))
+    return f'{random_mcast_ip()}/{random_cidr_mask(lowest_mask)}'

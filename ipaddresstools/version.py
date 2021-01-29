@@ -13,4 +13,3 @@ __version__ = '.'.join(map(str, __version_info__))
 __maintainer__ = 'Benjamin P. Trachtenberg'
 __email__ = 'e_ben_75-python@yahoo.com'
 __url__ = 'https://ipaddresstools.readthedocs.io'
-

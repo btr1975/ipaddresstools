@@ -28,7 +28,7 @@ master_doc = 'index'
 # The full version, including alpha/beta/rc tags
 release = about['__version__']
 
-project = 'ipaddresstools version: {}'.format(release)
+project = f'{about["__title__"]} v{release}'
 copyright = about['__copyright__']
 author = about['__author__']
 
